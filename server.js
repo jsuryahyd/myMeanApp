@@ -6,7 +6,7 @@ const mongoose = require('mongoose');
 const passport = require('passport');
 
 //config
-const config = require('./config.js');
+const config = require('./config/config.js');
 
 mongoose.connect(config.database);
 // confirm connection
@@ -25,6 +25,12 @@ server.use(bodyParser.json());
 server.use(bodyParser.urlencoded({
 	extended: false
 }));
+
+server.use(passport.initialize());
+server.use(passport.session());
+require('./config/passport-setup.js')(passport);
+
+
 const users = require('./routes/userRoutes.js');
 server.use('/users', users);
 
