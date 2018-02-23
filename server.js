@@ -43,7 +43,7 @@ server.get('*',(req,res)=>{
 })
 
 // const port = 2018;
-const port = process.env.port || 8080;
+const port = process.env.PORT || 8080;
 server.listen(port, () => {
 	console.log('Open brower and go to localhost:' + port);
 })
