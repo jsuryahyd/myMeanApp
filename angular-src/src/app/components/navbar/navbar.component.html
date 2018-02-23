@@ -1,9 +1,9 @@
 <div class="ui inverted menu navbar">
     <a [routerLink]="['/']" class="brand item">LetsChat</a>
     <!-- <a [routerLinkActive]="['active']" [routerLink]="['/']"  class="item">Home</a> -->
-    <a href="" class="item">Link</a>
-    <a href="" class="item">Link</a>
-    <a class="ui dropdown item">Dropdown
+    <a *ngIf="auth.isLoggedIn()" [routerLinkActive]="['active']"  [routerLink]="['/dashboard']" class="item">Dashboard</a>
+    <a *ngIf="auth.isLoggedIn()" [routerLinkActive]="['active']"  [routerLink]="['/profile']" class="item">Profile</a>    
+    <!-- <a class="ui dropdown item">Dropdown
       <i class="dropdown icon"></i>
       <div class="menu">
         <div class="item">Action</div>
@@ -13,10 +13,12 @@
         <div class="item">Seperated link</div>
         <div class="item">One more seperated link</div>
       </div>
-    </a>
+    </a> -->
     <div class="right menu">
         <!-- <a href="" class="active item">Default</a> -->
-        <a [routerLinkActive]="['active']"  [routerLink]="['/register']" class="item">Sign Up</a>
-        <a [routerLinkActive]="['active']" [routerLink]="['/login']" class="item">Login</a>
+        
+        <a *ngIf="!auth.isLoggedIn()"[routerLinkActive]="['active']"  [routerLink]="['/register']" class="item">Sign Up</a>
+        <a *ngIf="!auth.isLoggedIn()"[routerLinkActive]="['active']" [routerLink]="['/login']" class="item">Login</a>
+        <a (click)="logout()" class="item">Logout</a>
     </div>
 </div>

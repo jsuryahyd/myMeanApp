@@ -1,3 +1,20 @@
-<p>
-  login works!
-</p>
+<h1>Login</h1>
+<br>
+<div class="ui form container">
+    
+  
+    <form (submit)="loginSubmit()" >
+        <div class="field">
+            <label>Email</label>
+            <input [(ngModel)]="email"  name="email" type="text" placeholder="Enter a Valid email">
+        </div>
+
+        <div class="field">
+            <label>Password</label>
+            <input [(ngModel)]="password" name="password" type="password" placeholder="Your password">
+        </div>
+        <button  class="ui submit button green" >Login</button>
+        <div class="ui error message"></div>
+    </form>
+    <p>Not Registered? <a [routerLink]="['/register']">Sign up</a></p>
+</div>
