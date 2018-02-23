@@ -12,4 +12,20 @@
 
 
 ## Deploying to Firebase
+- Well a dissappointment
+- dont know exact reason but routes not working because of failure to connect to remote database.
+- may be because of spark plan 
+
+## Deploying to heroku
+- we have to expose config/api_key files to git here by removing them from .gitignore
+- make sure port is set to  ```process.env.PORT || 8080``` :- heroku sets port by its own, 8080 is a fallback for local testing
+- install heroku cli
+- then follow commands
+- ```heroku create```
+- ```git commit -am "deploying to heroku"```
+- ```git push heroku master```
+- ```heroku open``` (opens browser)
+- For logs : ```heroku logs --tail```
+- Changing name of app: heroku apps:rename chat-app-with-mean
+- Removing heroku from project : ```git remote rm heroku```
 
