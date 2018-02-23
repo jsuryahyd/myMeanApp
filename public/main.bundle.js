@@ -208,7 +208,7 @@ module.exports = ".myCenter{\r\n    max-width:900px;margin:auto\r\n}"
 /***/ "./src/app/components/home/home.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"row\">\n    <div class=\"column padding-reset\">\n        <div class=\"ui huge message page grid\">\n            <div class=\"myCenter\">\n                <h1 class=\"ui huge header\">Welcome to LetsChat</h1>\n                <p>Chat with Your Friends,Colleagues, and Family, With this free chat application.<br/>Just Login and start Chatting!</p>\n                <a class=\"ui blue button\" [routerLink]=\"['/register']\">Register</a>\n            </div>\n        </div>\n    </div>\n</div>\n\n"
+module.exports = "<div class=\"row\">\n    <div class=\"column padding-reset\">\n        <div class=\"ui huge message page grid\">\n            <div class=\"myCenter\">\n                <h1 class=\"ui huge header\">Welcome to LetsChat</h1>\n                <p>Chat with Your Friends,Colleagues, and Family, With this free chat application.<br/>Just Login and start Chatting!</p>\n                <a class=\"ui blue button\" [routerLink]=\"['/login']\">Login</a>\n                <a class=\"ui green button\" [routerLink]=\"['/register']\">Register</a>                \n            </div>\n        </div>\n    </div>\n</div>\n\n"
 
 /***/ }),
 
@@ -638,20 +638,20 @@ var AuthServiceService = (function () {
         var headers = new __WEBPACK_IMPORTED_MODULE_1__angular_http__["Headers"]();
         headers.append('content-Type', 'application/json');
         // http.post gives out an observable
-        return this.http.post('http://localhost:2018/users/user-register', user, { headers: headers }).map(function (res) { return res.json(); });
+        return this.http.post('users/user-register', user, { headers: headers }).map(function (res) { return res.json(); });
     };
     //called from login.component.ts
     AuthServiceService.prototype.authenticateUser = function (user) {
         var headers = new __WEBPACK_IMPORTED_MODULE_1__angular_http__["Headers"]();
         headers.append('content-Type', 'application/json');
-        return this.http.post('http://localhost:2018/users/authenticate', user, { headers: headers }).map(function (res) { return res.json(); });
+        return this.http.post('users/authenticate', user, { headers: headers }).map(function (res) { return res.json(); });
     };
     AuthServiceService.prototype.getProfile = function () {
         var headers = new __WEBPACK_IMPORTED_MODULE_1__angular_http__["Headers"]();
         headers.append('content-Type', 'application/json');
         this.loadToken();
         headers.append('Authorization', this.authToken);
-        return this.http.get('http://localhost:2018/users/profile', { headers: headers }).map(function (res) { return res.json(); });
+        return this.http.get('users/profile', { headers: headers }).map(function (res) { return res.json(); });
     };
     AuthServiceService.prototype.loadToken = function () {
         this.authToken = localStorage.getItem('id_token');

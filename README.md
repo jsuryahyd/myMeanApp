@@ -10,3 +10,6 @@
     - ```npm install angular2-jwt```
     - only a small package called ``tokenNotExpired`` is used
 
+
+## Deploying to Firebase
+

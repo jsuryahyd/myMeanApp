@@ -42,7 +42,13 @@ server.get('*',(req,res)=>{
 	res.sendFile(path.join(__dirname,'public/index.html'))
 })
 
-const port = 2018;
+// const port = 2018;
+const port = process.env.port || 8080;
 server.listen(port, () => {
 	console.log('Open brower and go to localhost:' + port);
 })
+
+server.use(function (err, req, res, next) {
+	console.error(err.stack)
+	res.status(500).send(err)
+  })
