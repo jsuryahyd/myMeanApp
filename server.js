@@ -38,6 +38,10 @@ server.get('/', (req, res) => {
 	res.send('Invalid end point');
 })
 
+server.get('*',(req,res)=>{
+	res.sendFile(path.join(__dirname,'public/index.html'))
+})
+
 const port = 2018;
 server.listen(port, () => {
 	console.log('Open brower and go to localhost:' + port);

@@ -73,7 +73,9 @@ router.post('/authenticate', (req, res, next) => {
 					res.json({
 						success: false,
 						msg: "Wrong Password"
-					})
+					});
+					return false;
+					// exit();
 				}
 				const token = jwt.sign({
 					data: matchedUserObj
@@ -94,7 +96,7 @@ router.post('/authenticate', (req, res, next) => {
 				})
 			})
 		} else {
-			res.send('no such user')
+			res.json({success:false,msg:'no such user'})
 		}
 	})
 })
@@ -105,8 +107,14 @@ router.get('/profile', passport.authenticate('jwt', {
 }), (req, res, next) => {
 	//this is the object we sent above
 	user = req.user;
+	userObj= {
+		id: user._id,
+		username: user.username,
+		email: user.email,
+		name: user.name
+	}
 	res.json({
-		user: user
+		user: userObj
 	});
 })
 
