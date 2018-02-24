@@ -1,4 +1,6 @@
 
+## The app is on heroku [chat-app-with-mean](https://chat-app-with-mean.herokuapp.com/dashboard)
+
 ## Front-end
 - make sure angular cli is installed or install it with ```npm install -g @angular/cli```
 - create a new project by ```ng new <frontend-name>``` in the project root folder.
