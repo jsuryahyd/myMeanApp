@@ -1,0 +1,40 @@
+.chat_area__body{
+    height: 450px;
+    position: relative;
+}
+
+.msg__input.ui.input{
+    postition:absolute !important;
+    bottom: 1em;
+    left: 1em;
+    width:calc(100% - 2em);
+
+}
+#chat__div{
+    height:400px;
+    overflow: auto;
+    padding-right: 15px;
+    
+}
+.chat__list{
+    padding-left: 0;
+    list-style: none;
+
+}
+.chat__list-wrapper{
+    margin-top: 3px;
+}
+
+.chat__list-wrapper:after{
+    clear:both; content:"."; display:block; height:0; visibility:hidden;
+}
+.chat__list li.yellow{
+    float: left;
+}
+
+.chat__list li.green{
+    position: relative;
+    right:-15px;
+    text-align: right;
+    float: right;
+}

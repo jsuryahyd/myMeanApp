@@ -17,6 +17,7 @@ import {RegisterComponent} from './components/register/register.component';
 import { ValidateFormService } from './services/validate-form.service';
 import { AuthServiceService } from './services/auth-service.service';
 import { AuthGuardService } from './services/auth-guard.service';
+import { ChatService } from './services/chat.service';
 
 const appRoutes:Routes =[
   {path:"",component:HomeComponent},
@@ -44,7 +45,7 @@ const appRoutes:Routes =[
     RouterModule.forRoot(appRoutes),
     FlashMessagesModule.forRoot()
   ],
-  providers: [ValidateFormService, AuthServiceService, AuthGuardService],
+  providers: [ValidateFormService, AuthServiceService, AuthGuardService, ChatService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -10,7 +10,8 @@
     - ```npm install angular2-jwt```
     - only a small package called ``tokenNotExpired`` is used
 
-
+## build
+- run ```ng build``` in angular-src folder to build the static files
 ## Deploying to Firebase
 - Well a dissappointment
 - dont know exact reason but routes not working because of failure to connect to remote database.

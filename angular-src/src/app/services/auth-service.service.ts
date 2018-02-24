@@ -13,13 +13,17 @@ export class AuthServiceService {
     let headers = new Headers();
     headers.append('content-Type','application/json');
     // http.post gives out an observable
+    // return this.http.post('http://localhost:8080/users/user-register',user,{headers:headers}).map(res=>res.json());
     return this.http.post('users/user-register',user,{headers:headers}).map(res=>res.json());
+    
   }
 //called from login.component.ts
   authenticateUser(user){
     let headers = new Headers();
     headers.append('content-Type','application/json');
+    // return this.http.post('http://localhost:8080/users/authenticate',user,{headers:headers}).map(res=>res.json())
     return this.http.post('users/authenticate',user,{headers:headers}).map(res=>res.json())
+    
   }
 
   getProfile(){
@@ -27,7 +31,9 @@ export class AuthServiceService {
     headers.append('content-Type','application/json');
     this.loadToken();
     headers.append('Authorization',this.authToken);
+    // return this.http.get('http://localhost:8080/users/profile',{headers:headers}).map(res=>res.json());
     return this.http.get('users/profile',{headers:headers}).map(res=>res.json());
+    
   }
 
   loadToken(){

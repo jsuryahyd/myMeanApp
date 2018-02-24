@@ -84,6 +84,7 @@ var AppComponent = (function () {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_13__services_validate_form_service__ = __webpack_require__("./src/app/services/validate-form.service.ts");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_14__services_auth_service_service__ = __webpack_require__("./src/app/services/auth-service.service.ts");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_15__services_auth_guard_service__ = __webpack_require__("./src/app/services/auth-guard.service.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_16__services_chat_service__ = __webpack_require__("./src/app/services/chat.service.ts");
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -99,6 +100,7 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 //3rd party modules
 
 //components
+
 
 
 
@@ -137,7 +139,7 @@ var AppModule = (function () {
                 __WEBPACK_IMPORTED_MODULE_2__angular_router__["b" /* RouterModule */].forRoot(appRoutes),
                 __WEBPACK_IMPORTED_MODULE_5_angular2_flash_messages__["FlashMessagesModule"].forRoot()
             ],
-            providers: [__WEBPACK_IMPORTED_MODULE_13__services_validate_form_service__["a" /* ValidateFormService */], __WEBPACK_IMPORTED_MODULE_14__services_auth_service_service__["a" /* AuthServiceService */], __WEBPACK_IMPORTED_MODULE_15__services_auth_guard_service__["a" /* AuthGuardService */]],
+            providers: [__WEBPACK_IMPORTED_MODULE_13__services_validate_form_service__["a" /* ValidateFormService */], __WEBPACK_IMPORTED_MODULE_14__services_auth_service_service__["a" /* AuthServiceService */], __WEBPACK_IMPORTED_MODULE_15__services_auth_guard_service__["a" /* AuthGuardService */], __WEBPACK_IMPORTED_MODULE_16__services_chat_service__["a" /* ChatService */]],
             bootstrap: [__WEBPACK_IMPORTED_MODULE_6__app_component__["a" /* AppComponent */]]
         })
     ], AppModule);
@@ -151,14 +153,14 @@ var AppModule = (function () {
 /***/ "./src/app/components/dashboard/dashboard.component.css":
 /***/ (function(module, exports) {
 
-module.exports = ""
+module.exports = ".chat_area__body{\r\n    height: 450px;\r\n    position: relative;\r\n}\r\n\r\n.msg__input.ui.input{\r\n    postition:absolute !important;\r\n    bottom: 1em;\r\n    left: 1em;\r\n    width:calc(100% - 2em);\r\n\r\n}\r\n\r\n#chat__div{\r\n    height:400px;\r\n    overflow: auto;\r\n    padding-right: 15px;\r\n    \r\n}\r\n\r\n.chat__list{\r\n    padding-left: 0;\r\n    list-style: none;\r\n\r\n}\r\n\r\n.chat__list-wrapper{\r\n    margin-top: 3px;\r\n}\r\n\r\n.chat__list-wrapper:after{\r\n    clear:both; content:\".\"; display:block; height:0; visibility:hidden;\r\n}\r\n\r\n.chat__list li.yellow{\r\n    float: left;\r\n}\r\n\r\n.chat__list li.green{\r\n    position: relative;\r\n    right:-15px;\r\n    text-align: right;\r\n    float: right;\r\n}"
 
 /***/ }),
 
 /***/ "./src/app/components/dashboard/dashboard.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "\n<h1>Dashboard</h1>\n<p>Welcome to your Dashboard</p>\n"
+module.exports = "\n<div class=\"ui grid stackable\" style=\"flex-direction:column\">\n    <div class=\"column\">\n        <h1>Dashboard</h1>\n        <p>Welcome to your Chat</p>\n    </div>\n</div>\n\n<br>\n<div class=\"ui grid two column stackable doubling\">\n<div class=\"chat_area column panel\" >\n        <div class=\"ui blue inverted top attached segment\"><i class=\"inverted circular chat link icon green\"></i> LetsChat <small class=\"float right\">{{num_activeUsers}}</small></div>\n        <div class=\"ui bottom attached segment chat_area__body\">\n                <!-- <strong>{{otherUser}}</strong> {{newMessage}} -->\n                <div *ngIf=\"chats.length > 0\" id=\"chat__div\" #scrollMe [scrollTop]=\"scrollMe.scrollHeight\">\n                    <ul  class=\"chat__list\">\n                        <div *ngFor=\"let item of chats\" class=\"chat__list-wrapper\">\n                <li   [ngClass]=\"{'green':item.name==username,'ui':true,'segment':true,'inverted':true,'yellow':item.name !==username}\">\n                    <strong *ngIf=\"item.name != username\">{{item.name}}: </strong> {{item.msg}}\n                </li></div>\n            </ul>\n            \n            \n            </div>\n            <i>{{feedback}}</i>\n        <div class=\"ui icon input msg__input\" style=\"position:absolute\">\n \n                <input  (keyup)=\"onMessageInput($event)\" (keypress)=\"emit_typing()\" name=\"message\" type=\"text\" placeholder=\"Message\" #message>\n                <i class=\"inverted circular chat link icon green\" (click)=\"send_message(); message.value=''\"></i>\n            </div></div>\n</div>\n</div>\n\n<!-- <button  class=\"ui submit button green\" (click)=\"send_message()\">Send</button> -->\n\n\n"
 
 /***/ }),
 
@@ -168,6 +170,10 @@ module.exports = "\n<h1>Dashboard</h1>\n<p>Welcome to your Dashboard</p>\n"
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return DashboardComponent; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__("./node_modules/@angular/core/esm5/core.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_socket_io_client__ = __webpack_require__("./node_modules/socket.io-client/lib/index.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_socket_io_client___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_socket_io_client__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_angular2_flash_messages__ = __webpack_require__("./node_modules/angular2-flash-messages/module/index.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_angular2_flash_messages___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_angular2_flash_messages__);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -178,10 +184,63 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 
+
+
 var DashboardComponent = (function () {
-    function DashboardComponent() {
+    function DashboardComponent(flashMessages) {
+        this.flashMessages = flashMessages;
+        this.activeUsers = [];
+        this.chats = [];
     }
     DashboardComponent.prototype.ngOnInit = function () {
+        var _this = this;
+        //for testing locally
+        // const url = 'http://localhost:8080';
+        // this.socket= io(url);
+        this.socket = __WEBPACK_IMPORTED_MODULE_1_socket_io_client__();
+        //as soon as connected, send user info
+        this.username = JSON.parse(localStorage.getItem('user')).username;
+        this.socket.emit('setId', { username: this.username });
+        //receiving message
+        this.socket.on('chat', function (data) {
+            _this.feedback = "";
+            _this.otherUser = data.user + ": ";
+            _this.newMessage = data.message;
+            _this.chats.push({ name: data.user, msg: _this.newMessage });
+            // obj.scrollTop = obj.scrollHeight;
+        });
+        //receiving typing feedback
+        this.socket.on('typing', function (data) {
+            _this.feedback = data.user + " is typing";
+        });
+        this.socket.on('newJoin', function (data) {
+            _this.activeUsers.push(data.newJoin);
+            _this.flashMessages.show(data.newJoin + " joined the chat.", { cssClass: "ui positive message", timeout: 3000 });
+            _this.num_activeUsers = data.num_users;
+        });
+        this.socket.on('userLeft', function (data) {
+            console.log(_this.activeUsers);
+            _this.activeUsers.splice(_this.activeUsers.indexOf(data.left), 1);
+            console.log(_this.activeUsers);
+            _this.flashMessages.show(data.left + " left the chat.", { cssClass: "ui negative message", timeout: 3000 });
+            _this.num_activeUsers = data.num_users;
+        });
+    };
+    DashboardComponent.prototype.onMessageInput = function (ev) {
+        this.message = ev.target.value;
+    };
+    DashboardComponent.prototype.send_message = function () {
+        if (this.message) {
+            console.log(this.message, this.username);
+            this.socket.emit('chat', {
+                message: this.message,
+                user: this.username
+            });
+            this.message = '';
+        }
+    };
+    DashboardComponent.prototype.emit_typing = function () {
+        this.socket.emit('typing', { user: this.username });
     };
     DashboardComponent = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Component"])({
@@ -189,7 +248,7 @@ var DashboardComponent = (function () {
             template: __webpack_require__("./src/app/components/dashboard/dashboard.component.html"),
             styles: [__webpack_require__("./src/app/components/dashboard/dashboard.component.css")]
         }),
-        __metadata("design:paramtypes", [])
+        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_2_angular2_flash_messages__["FlashMessagesService"]])
     ], DashboardComponent);
     return DashboardComponent;
 }());
@@ -386,7 +445,7 @@ var NavbarComponent = (function () {
     NavbarComponent.prototype.logout = function () {
         this.auth.logout();
         this.flashMessage.show('You are now Logged out', { cssClass: "ui message", timeout: 10000 });
-        this.router.navigate(['/dashboard']);
+        this.router.navigate(['/login']);
     };
     NavbarComponent = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Component"])({
@@ -424,6 +483,8 @@ module.exports = "<h1>Welcome,{{name}}</h1>\n\n<p>Your Username : {{username}} <
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return ProfileComponent; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__("./node_modules/@angular/core/esm5/core.js");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__services_auth_service_service__ = __webpack_require__("./src/app/services/auth-service.service.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_angular2_flash_messages__ = __webpack_require__("./node_modules/angular2-flash-messages/module/index.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_angular2_flash_messages___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_angular2_flash_messages__);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -435,9 +496,11 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 
 
+
 var ProfileComponent = (function () {
-    function ProfileComponent(auth) {
+    function ProfileComponent(auth, flashMessages) {
         this.auth = auth;
+        this.flashMessages = flashMessages;
     }
     ProfileComponent.prototype.ngOnInit = function () {
         var _this = this;
@@ -451,13 +514,19 @@ var ProfileComponent = (function () {
                 throw err;
         });
     };
+    ProfileComponent.prototype.edit_username = function () {
+        this.flashMessages.show('Edit username not yet implemented', { cssClass: "ui positive message", timeout: 3000 });
+    };
+    ProfileComponent.prototype.edit_email = function () {
+        this.flashMessages.show('Edit Email not yet implemented', { cssClass: "ui positive message", timeout: 3000 });
+    };
     ProfileComponent = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Component"])({
             selector: 'app-profile',
             template: __webpack_require__("./src/app/components/profile/profile.component.html"),
             styles: [__webpack_require__("./src/app/components/profile/profile.component.css")]
         }),
-        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1__services_auth_service_service__["a" /* AuthServiceService */]])
+        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1__services_auth_service_service__["a" /* AuthServiceService */], __WEBPACK_IMPORTED_MODULE_2_angular2_flash_messages__["FlashMessagesService"]])
     ], ProfileComponent);
     return ProfileComponent;
 }());
@@ -638,12 +707,14 @@ var AuthServiceService = (function () {
         var headers = new __WEBPACK_IMPORTED_MODULE_1__angular_http__["Headers"]();
         headers.append('content-Type', 'application/json');
         // http.post gives out an observable
+        // return this.http.post('http://localhost:8080/users/user-register',user,{headers:headers}).map(res=>res.json());
         return this.http.post('users/user-register', user, { headers: headers }).map(function (res) { return res.json(); });
     };
     //called from login.component.ts
     AuthServiceService.prototype.authenticateUser = function (user) {
         var headers = new __WEBPACK_IMPORTED_MODULE_1__angular_http__["Headers"]();
         headers.append('content-Type', 'application/json');
+        // return this.http.post('http://localhost:8080/users/authenticate',user,{headers:headers}).map(res=>res.json())
         return this.http.post('users/authenticate', user, { headers: headers }).map(function (res) { return res.json(); });
     };
     AuthServiceService.prototype.getProfile = function () {
@@ -651,6 +722,7 @@ var AuthServiceService = (function () {
         headers.append('content-Type', 'application/json');
         this.loadToken();
         headers.append('Authorization', this.authToken);
+        // return this.http.get('http://localhost:8080/users/profile',{headers:headers}).map(res=>res.json());
         return this.http.get('users/profile', { headers: headers }).map(function (res) { return res.json(); });
     };
     AuthServiceService.prototype.loadToken = function () {
@@ -675,6 +747,36 @@ var AuthServiceService = (function () {
         __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1__angular_http__["Http"]])
     ], AuthServiceService);
     return AuthServiceService;
+}());
+
+
+
+/***/ }),
+
+/***/ "./src/app/services/chat.service.ts":
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return ChatService; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__("./node_modules/@angular/core/esm5/core.js");
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+
+var ChatService = (function () {
+    function ChatService() {
+    }
+    ChatService = __decorate([
+        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Injectable"])(),
+        __metadata("design:paramtypes", [])
+    ], ChatService);
+    return ChatService;
 }());
 
 
@@ -772,6 +874,13 @@ Object(__WEBPACK_IMPORTED_MODULE_1__angular_platform_browser_dynamic__["a" /* pl
 
 module.exports = __webpack_require__("./src/main.ts");
 
+
+/***/ }),
+
+/***/ 1:
+/***/ (function(module, exports) {
+
+/* (ignored) */
 
 /***/ })
 

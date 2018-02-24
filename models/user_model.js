@@ -23,7 +23,7 @@ const userSchema = mongoose.Schema({
 
 module.exports = User = mongoose.model('user', userSchema, 'mean_app');
 module.exports.getUserById = (id, callback) => {
-	User.findById(id, callback)
+	User.findById(id, callback);
 }
 
 module.exports.getUserByUsername = function(username, callback) {

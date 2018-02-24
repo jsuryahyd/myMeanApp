@@ -1,3 +1,36 @@
 
-<h1>Dashboard</h1>
-<p>Welcome to your Dashboard</p>
+<div class="ui grid stackable" style="flex-direction:column">
+    <div class="column">
+        <h1>Dashboard</h1>
+        <p>Welcome to your Chat</p>
+    </div>
+</div>
+
+<br>
+<div class="ui grid two column stackable doubling">
+<div class="chat_area column panel" >
+        <div class="ui blue inverted top attached segment"><i class="inverted circular chat link icon green"></i> LetsChat <small class="float right">{{num_activeUsers}}</small></div>
+        <div class="ui bottom attached segment chat_area__body">
+                <!-- <strong>{{otherUser}}</strong> {{newMessage}} -->
+                <div *ngIf="chats.length > 0" id="chat__div" #scrollMe [scrollTop]="scrollMe.scrollHeight">
+                    <ul  class="chat__list">
+                        <div *ngFor="let item of chats" class="chat__list-wrapper">
+                <li   [ngClass]="{'green':item.name==username,'ui':true,'segment':true,'inverted':true,'yellow':item.name !==username}">
+                    <strong *ngIf="item.name != username">{{item.name}}: </strong> {{item.msg}}
+                </li></div>
+            </ul>
+            
+            
+            </div>
+            <i>{{feedback}}</i>
+        <div class="ui icon input msg__input" style="position:absolute">
+ 
+                <input  (keyup)="onMessageInput($event)" (keypress)="emit_typing()" name="message" type="text" placeholder="Message" #message>
+                <i class="inverted circular chat link icon green" (click)="send_message(); message.value=''"></i>
+            </div></div>
+</div>
+</div>
+
+<!-- <button  class="ui submit button green" (click)="send_message()">Send</button> -->
+
+

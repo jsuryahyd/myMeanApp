@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthServiceService } from '../../services/auth-service.service';
+import { FlashMessagesService } from 'angular2-flash-messages';
 
 @Component({
   selector: 'app-profile',
@@ -11,7 +12,7 @@ userProfile:Object;
   username:string;
 email:string;
 name:string;
-  constructor(private auth:AuthServiceService) { }
+  constructor(private auth:AuthServiceService,private flashMessages:FlashMessagesService) { }
 
   ngOnInit() {
      this.auth.getProfile().subscribe((data)=>{
@@ -23,6 +24,13 @@ name:string;
     },err=>{
       if(err) throw err
     });
+  }
+
+  edit_username(){
+    this.flashMessages.show('Edit username not yet implemented',{cssClass:"ui positive message",timeout:3000})
+  }
+  edit_email(){
+    this.flashMessages.show('Edit Email not yet implemented',{cssClass:"ui positive message",timeout:3000})
   }
 
 

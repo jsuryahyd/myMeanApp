@@ -20,7 +20,7 @@ export class NavbarComponent implements OnInit {
   logout(){
     this.auth.logout();
     this.flashMessage.show('You are now Logged out',{cssClass:"ui message",timeout:10000});
-    this.router.navigate(['/dashboard']);
+    this.router.navigate(['/login']);
   }
 
 }
